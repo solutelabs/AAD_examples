@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">DatabaseExample</string>
+    <string name="action_add_user">Add User</string>
+    <string name="action_add_notes">Add Notes</string>
+    <string name="text_first_name">First name : </string>
+    <string name="text_last_name">Last name : </string>
+    <string name="hint_firstname">Enter your firstname</string>
+    <string name="hint_lastname">Enter your lastname</string>
+    <string name="text_email">Email :</string>
+    <string name="hint_email">Enter your email id</string>
+    <string name="menu_action_add">Add</string>
+    <string name="text_success_add_user">User added successfully.</string>
+    <string name="text_failure_add_user">Failed to add User.</string>
+    <string name="text_first_name_error">Please Enter first name.</string>
+    <string name="text_last_name_error">Please Enter lastname.</string>
+    <string name="text_email_error">Please Enter email address.</string>
+    <string name="title_add_user">Add User</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_title">Title</string>
+    <string name="text_success_add_notes">Notes added successfully.</string>
+    <string name="text_failure_add_notes">Failed to add notes.</string>
+    <string name="text_description_error">Please enter description.</string>
+    <string name="text_title_error">Please enter title.</string>
+    <string name="title_add_notes">Add Notes</string>
+    <string name="text_choose_valid_user">Please choose valid User.</string>
+</resources>
