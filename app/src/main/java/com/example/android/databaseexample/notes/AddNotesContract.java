@@ -1,8 +1,8 @@
-package com.example.showgitprofile.databaseexample.notes;
+package com.example.android.databaseexample.notes;
 
 import android.content.Context;
 
-import com.example.showgitprofile.databaseexample.data.model.User;
+import com.example.android.databaseexample.data.model.User;
 
 import java.util.List;
 

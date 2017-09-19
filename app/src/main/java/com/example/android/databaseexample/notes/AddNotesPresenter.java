@@ -1,15 +1,17 @@
-package com.example.showgitprofile.databaseexample.notes;
+package com.example.android.databaseexample.notes;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import com.example.showgitprofile.databaseexample.data.NotesContract;
-import com.example.showgitprofile.databaseexample.data.NotesContract.NotesEntry;
-import com.example.showgitprofile.databaseexample.data.NotesHelper;
-import com.example.showgitprofile.databaseexample.data.model.User;
+import com.example.android.databaseexample.data.NotesContract;
+import com.example.android.databaseexample.data.NotesContract.NotesEntry;
+import com.example.android.databaseexample.data.NotesContract.UserEntry;
+import com.example.android.databaseexample.data.NotesHelper;
+import com.example.android.databaseexample.data.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +22,11 @@ import java.util.List;
 
 public class AddNotesPresenter implements AddNotesContract.Presenter {
     AddNotesContract.View mView;
-    NotesHelper mNotesHelper;
+//    NotesHelper mNotesHelper;
 
     public AddNotesPresenter(AddNotesContract.View view) {
         mView = view;
-        mNotesHelper = new NotesHelper(mView.getContext());
+//        mNotesHelper = new NotesHelper(mView.getContext());
     }
 
     @Override
@@ -46,7 +48,7 @@ public class AddNotesPresenter implements AddNotesContract.Presenter {
             mView.showUserIdError();
             return;
         }
-        AsyncTask<Void, Void, Long> bg = new AsyncTask<Void, Void, Long>() {
+        AsyncTask<Void, Void, Uri> bg = new AsyncTask<Void, Void, Uri>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -54,25 +56,30 @@ public class AddNotesPresenter implements AddNotesContract.Presenter {
             }
 
             @Override
-            protected Long doInBackground(Void... voids) {
+            protected Uri doInBackground(Void... voids) {
                 Long currentTime = System.currentTimeMillis();
-                SQLiteDatabase db = mNotesHelper.getWritableDatabase();
+//                SQLiteDatabase db = mNotesHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 values.put(NotesEntry.COLUMN_TITLE, title);
                 values.put(NotesEntry.COLUMN_DESCRIPTION, description);
                 values.put(NotesEntry.COLUMN_USER_ID, userId);
                 values.put(NotesEntry.COLUMN_CREATION_TIME, currentTime);
                 values.put(NotesEntry.COLUMN_UPDATE_TIME, currentTime);
-                long newRawId = db.insert(NotesEntry.TABLE_NAME, null, values);
-                return newRawId;
+//                long newRawId = db.insert(NotesEntry.TABLE_NAME, null, values);
+                if (mView != null && mView.getContext() != null) {
+                    Uri newUri = mView.getContext().getContentResolver()
+                            .insert(NotesEntry.CONTENT_URI, values);
+                    return newUri;
+                }
+                return null;
             }
 
             @Override
-            protected void onPostExecute(Long newRawId) {
-                super.onPostExecute(newRawId);
+            protected void onPostExecute(Uri newUri) {
+                super.onPostExecute(newUri);
                 if (mView != null) {
                     mView.showLoadingIndicator(false);
-                    if (newRawId != -1) {
+                    if (newUri != null) {
                         mView.showSuccessNotesMessage();
                     } else {
                         mView.showFailureNotesMessage();
@@ -96,30 +103,46 @@ public class AddNotesPresenter implements AddNotesContract.Presenter {
 
             @Override
             protected List<User> doInBackground(Void... voids) {
-                SQLiteDatabase db = mNotesHelper.getReadableDatabase();
+//                SQLiteDatabase db = mNotesHelper.getReadableDatabase();
+
                 String[] projection = {
                         NotesContract.UserEntry._ID,
                         NotesContract.UserEntry.COLUMN_EMAIL
                 };
-                Cursor cursor = db.query(NotesContract.UserEntry.TABLE_NAME,
-                        projection,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null);
-                List<User> userList = new ArrayList<>();
-                try {
-                    while (cursor.moveToNext()) {
-                        User user = new User();
-                        user.setId(cursor.getInt(cursor.getColumnIndex(NotesContract.UserEntry._ID)));
-                        user.setEmail(cursor.getString(cursor.getColumnIndex(NotesContract.UserEntry.COLUMN_EMAIL)));
-                        userList.add(user);
+
+                if (mView != null && mView.getContext() != null) {
+
+//                Cursor cursor = db.query(NotesContract.UserEntry.TABLE_NAME,
+//                        projection,
+//                        null,
+//                        null,
+//                        null,
+//                        null,
+//                        null);
+
+                    Cursor cursor = mView.getContext().getContentResolver()
+                            .query(UserEntry.CONTENT_URI, projection,
+                                    null, null, null);
+
+                    List<User> userList = new ArrayList<>();
+
+                    try {
+                        while (cursor.moveToNext()) {
+                            User user = new User();
+                            user.setId(cursor
+                                    .getInt(cursor.getColumnIndex(NotesContract.UserEntry._ID)));
+                            user.setEmail(cursor
+                                    .getString(cursor
+                                            .getColumnIndex(NotesContract.UserEntry.COLUMN_EMAIL)));
+                            userList.add(user);
+                        }
+                    } finally {
+                        cursor.close();
                     }
-                } finally {
-                    cursor.close();
+
+                    return userList;
                 }
-                return userList;
+                return null;
             }
 
             @Override
@@ -153,8 +176,8 @@ public class AddNotesPresenter implements AddNotesContract.Presenter {
 
     @Override
     public void unSubscribe() {
-        if (mNotesHelper != null) {
-            mNotesHelper.close();
-        }
+//        if (mNotesHelper != null) {
+//            mNotesHelper.close();
+//        }
     }
 }

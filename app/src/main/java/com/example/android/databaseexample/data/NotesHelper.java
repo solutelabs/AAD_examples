@@ -1,11 +1,11 @@
-package com.example.showgitprofile.databaseexample.data;
+package com.example.android.databaseexample.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.showgitprofile.databaseexample.data.NotesContract.UserEntry;
-import com.example.showgitprofile.databaseexample.data.NotesContract.NotesEntry;
+import com.example.android.databaseexample.data.NotesContract.UserEntry;
+import com.example.android.databaseexample.data.NotesContract.NotesEntry;
 
 /**
  * Database Helper for Notes App. Manages Database creation and version management.

@@ -1,4 +1,4 @@
-package com.example.showgitprofile.databaseexample.add_user;
+package com.example.android.databaseexample.add_user;
 
 import android.content.Context;
 

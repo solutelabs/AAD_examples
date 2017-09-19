@@ -1,4 +1,4 @@
-package com.example.showgitprofile.databaseexample;
+package com.example.android.databaseexample;
 
 import org.junit.Test;
 

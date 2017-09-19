@@ -1,4 +1,4 @@
-package com.example.showgitprofile.databaseexample.data.model;
+package com.example.android.databaseexample.data.model;
 
 /**
  * User table model

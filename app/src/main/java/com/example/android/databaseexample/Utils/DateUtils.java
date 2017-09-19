@@ -1,4 +1,4 @@
-package com.example.showgitprofile.databaseexample.Utils;
+package com.example.android.databaseexample.Utils;
 
 import android.util.Log;
 

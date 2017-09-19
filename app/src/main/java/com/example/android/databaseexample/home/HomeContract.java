@@ -1,9 +1,9 @@
-package com.example.showgitprofile.databaseexample.home;
+package com.example.android.databaseexample.home;
 
 import android.content.Context;
 
-import com.example.showgitprofile.databaseexample.data.model.Notes;
-import com.example.showgitprofile.databaseexample.data.model.User;
+import com.example.android.databaseexample.data.model.Notes;
+import com.example.android.databaseexample.data.model.User;
 
 import java.util.List;
 
