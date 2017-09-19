@@ -1,12 +1,13 @@
-package com.example.showgitprofile.databaseexample.add_user;
+package com.example.android.databaseexample.add_user;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import com.example.showgitprofile.databaseexample.data.NotesContract.UserEntry;
-import com.example.showgitprofile.databaseexample.data.NotesHelper;
+import com.example.android.databaseexample.data.NotesContract.UserEntry;
+import com.example.android.databaseexample.data.NotesHelper;
 
 /**
  * AddUser Presenter
@@ -14,11 +15,11 @@ import com.example.showgitprofile.databaseexample.data.NotesHelper;
 
 public class AddUserPresenter implements AddUserContract.Presenter {
     AddUserContract.View mView;
-    NotesHelper mNotesHelper;
+//    NotesHelper mNotesHelper;
 
     public AddUserPresenter(AddUserContract.View view) {
         mView = view;
-        mNotesHelper = new NotesHelper(mView.getContext());
+//        mNotesHelper = new NotesHelper(mView.getContext());
     }
 
     @Override
@@ -35,7 +36,7 @@ public class AddUserPresenter implements AddUserContract.Presenter {
             if (mView != null) mView.showEmailError();
             return;
         }
-        AsyncTask<Void, Void, Long> bg = new AsyncTask<Void, Void, Long>() {
+        AsyncTask<Void, Void, Uri> bg = new AsyncTask<Void, Void, Uri>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -43,22 +44,26 @@ public class AddUserPresenter implements AddUserContract.Presenter {
             }
 
             @Override
-            protected Long doInBackground(Void... voids) {
-                SQLiteDatabase db = mNotesHelper.getWritableDatabase();
+            protected Uri doInBackground(Void... voids) {
+//                SQLiteDatabase db = mNotesHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 values.put(UserEntry.COLUMN_FIRSTNAME, firstName);
                 values.put(UserEntry.COLUMN_LASTNAME, lastName);
                 values.put(UserEntry.COLUMN_EMAIL, email);
-                long newRawId = db.insert(UserEntry.TABLE_NAME, null, values);
-                return newRawId;
+//                long newRawId = db.insert(UserEntry.TABLE_NAME, null, values);
+                if (mView != null && mView.getContext() != null) {
+                    Uri newUri = mView.getContext().getContentResolver().insert(UserEntry.CONTENT_URI, values);
+                    return newUri;
+                }
+                return null;
             }
 
             @Override
-            protected void onPostExecute(Long newRawId) {
-                super.onPostExecute(newRawId);
+            protected void onPostExecute(Uri newUri) {
+                super.onPostExecute(newUri);
                 if (mView != null) {
                     mView.showLoadingIndicator(false);
-                    if (newRawId != -1) {
+                    if (newUri != null) {
                         mView.showSuccessForAddUser();
                     } else {
                         mView.showFailureForAddUser();
@@ -67,13 +72,11 @@ public class AddUserPresenter implements AddUserContract.Presenter {
             }
         };
         bg.execute();
-
-
     }
 
     @Override
     public void unSubscribe() {
-        mNotesHelper.close();
+//        mNotesHelper.close();
     }
 
     private boolean isFieldValid(String text) {

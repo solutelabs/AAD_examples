@@ -1,4 +1,4 @@
-package com.example.showgitprofile.databaseexample.notes;
+package com.example.android.databaseexample.notes;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -20,8 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.showgitprofile.databaseexample.R;
-import com.example.showgitprofile.databaseexample.data.model.User;
+import com.example.android.databaseexample.R;
+import com.example.android.databaseexample.data.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

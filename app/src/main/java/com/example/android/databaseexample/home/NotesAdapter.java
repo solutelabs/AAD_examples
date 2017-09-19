@@ -1,4 +1,4 @@
-package com.example.showgitprofile.databaseexample.home;
+package com.example.android.databaseexample.home;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.showgitprofile.databaseexample.R;
-import com.example.showgitprofile.databaseexample.data.model.Notes;
+import com.example.android.databaseexample.R;
+import com.example.android.databaseexample.data.model.Notes;
 
 import java.util.List;
 

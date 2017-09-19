@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.showgitprofile.databaseexample"
+<manifest package="com.example.android.databaseexample"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
@@ -9,23 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".home.HomeActivity">
+        <activity android:name="com.example.android.databaseexample.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".add_user.AddUserActivity"
+            android:name="com.example.android.databaseexample.add_user.AddUserActivity"
             android:label="@string/title_add_user"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".notes.AddNotesActivity"
+            android:name="com.example.android.databaseexample.notes.AddNotesActivity"
             android:label="@string/title_add_notes"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <provider
+            android:name="com.example.android.databaseexample.data.NotesProvider"
+            android:authorities="com.example.android.databaseexample"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.showgitprofile.databaseexample.home;
+package com.example.android.databaseexample.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,12 +18,12 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.showgitprofile.databaseexample.Constants;
-import com.example.showgitprofile.databaseexample.R;
-import com.example.showgitprofile.databaseexample.add_user.AddUserActivity;
-import com.example.showgitprofile.databaseexample.data.model.Notes;
-import com.example.showgitprofile.databaseexample.data.model.User;
-import com.example.showgitprofile.databaseexample.notes.AddNotesActivity;
+import com.example.android.databaseexample.Constants;
+import com.example.android.databaseexample.R;
+import com.example.android.databaseexample.add_user.AddUserActivity;
+import com.example.android.databaseexample.data.model.Notes;
+import com.example.android.databaseexample.data.model.User;
+import com.example.android.databaseexample.notes.AddNotesActivity;
 
 import java.util.ArrayList;
 import java.util.List;
