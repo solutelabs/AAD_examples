@@ -1,5 +1,10 @@
 package com.example.android.databaseexample.data.model;
 
+import android.database.Cursor;
+
+import com.example.android.databaseexample.Utils.DateUtils;
+import com.example.android.databaseexample.data.NotesContract;
+
 /**
  * Notes Model
  */
@@ -11,6 +16,23 @@ public class Notes {
     String createTime;
     String updateTime;
     String userId;
+
+    public static Notes fromCursor(Cursor cursor) {
+        Notes notes = new Notes();
+        notes.setId(cursor.getInt(
+                cursor.getColumnIndex(NotesContract.NotesEntry._ID)));
+        notes.setTitle(cursor.getString(
+                cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE)));
+        notes.setDescription(cursor.getString(
+                cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_DESCRIPTION)));
+        notes.setCreateTime(DateUtils.getFormatedDate(cursor.getString(
+                cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_CREATION_TIME))));
+        notes.setUpdateTime(DateUtils.getFormatedDate(cursor.getString(
+                cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_UPDATE_TIME))));
+        notes.setUserId(cursor.getString(
+                cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_USER_ID)));
+        return notes;
+    }
 
     public int getId() {
         return id;

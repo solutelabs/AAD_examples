@@ -1,5 +1,6 @@
 package com.example.android.databaseexample.home;
 
+import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,7 +22,6 @@ import android.widget.TextView;
 import com.example.android.databaseexample.Constants;
 import com.example.android.databaseexample.R;
 import com.example.android.databaseexample.add_user.AddUserActivity;
-import com.example.android.databaseexample.data.model.Notes;
 import com.example.android.databaseexample.data.model.User;
 import com.example.android.databaseexample.notes.AddNotesActivity;
 
@@ -29,13 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements HomeContract.View {
+
     private RecyclerView rvShowNotes;
     private Button btnAddNotes, btnAddUser;
     private Spinner spChooseUser;
     private FrameLayout flProgressbar;
     private HomePresenter presenter;
-    private NotesAdapter notesAdapter;
-    private int selectedUserId;
+    private NotesCursorAdapter notesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +46,29 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         setListener();
     }
 
+    private void bindView() {
+        rvShowNotes = findViewById(R.id.rv_show_notes);
+        btnAddUser = findViewById(R.id.btn_add_user);
+        btnAddNotes = findViewById(R.id.btn_add_notes);
+        spChooseUser = findViewById(R.id.sp_choose_user);
+        flProgressbar = findViewById(R.id.fl_progress_bg);
+    }
+
+    private void init() {
+        presenter = new HomePresenter(this);
+        notesAdapter = new NotesCursorAdapter(null);
+        rvShowNotes.setLayoutManager(
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        rvShowNotes.setAdapter(notesAdapter);
+        presenter.getAllUser();
+    }
+
     private void setListener() {
         btnAddNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, AddNotesActivity.class);
-                startActivityForResult(intent, Constants.ADD_NOTES_CODE);
+                startActivity(intent);
             }
         });
         btnAddUser.setOnClickListener(new View.OnClickListener() {
@@ -68,34 +85,10 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.ADD_USER_CODE) {
             if (resultCode == RESULT_OK) {
+                notesAdapter.changeCursor(null);
                 presenter.getAllUser();
-                notesAdapter.updateNotesData(null);
-            }
-        } else if (requestCode == Constants.ADD_NOTES_CODE) {
-            if (resultCode == RESULT_OK) {
-                if (selectedUserId != -1) {
-                    presenter.getNotes(selectedUserId);
-                }
             }
         }
-    }
-
-    private void init() {
-        presenter = new HomePresenter(this);
-        selectedUserId = -1;
-        presenter.getAllUser();
-        notesAdapter = new NotesAdapter();
-        rvShowNotes.setLayoutManager(
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        rvShowNotes.setAdapter(notesAdapter);
-    }
-
-    private void bindView() {
-        rvShowNotes = findViewById(R.id.rv_show_notes);
-        btnAddUser = findViewById(R.id.btn_add_user);
-        btnAddNotes = findViewById(R.id.btn_add_notes);
-        spChooseUser = findViewById(R.id.sp_choose_user);
-        flProgressbar = findViewById(R.id.fl_progress_bg);
     }
 
     @Override
@@ -135,10 +128,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 User selectedUser = userList.get(position);
                 if (position > 0) {
-                    selectedUserId = selectedUser.getId();
                     presenter.getNotes(selectedUser.getId());
-                } else {
-                    selectedUserId = -1;
                 }
             }
 
@@ -150,17 +140,6 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.unSubscribe();
-    }
-
-    @Override
-    public void showNotes(List<Notes> notesList) {
-        notesAdapter.updateNotesData(notesList);
-    }
-
-    @Override
     public Context getContext() {
         return this;
     }
@@ -168,5 +147,15 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @Override
     public void showLoadingIndicator(boolean isShow) {
         flProgressbar.setVisibility(isShow ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public NotesCursorAdapter getAdapter() {
+        return notesAdapter;
+    }
+
+    @Override
+    public LoaderManager getLoader() {
+        return getLoaderManager();
     }
 }

@@ -85,7 +85,6 @@ public class AddNotesActivity extends AppCompatActivity implements AddNotesContr
     @Override
     public void showSuccessNotesMessage() {
         Toast.makeText(this, R.string.text_success_add_notes, Toast.LENGTH_LONG).show();
-        setResult(RESULT_OK);
         finish();
     }
 
