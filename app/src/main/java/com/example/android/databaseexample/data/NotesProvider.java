@@ -106,6 +106,9 @@ public class NotesProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Can not query unknown URI " + uri);
         }
+        if (getContext() != null && cursor != null) {
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        }
         return cursor;
     }
 
@@ -169,6 +172,7 @@ public class NotesProvider extends ContentProvider {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long id = db.insert(NotesEntry.TABLE_NAME, null, contentValues);
         if (id != -1) {
+            getContext().getContentResolver().notifyChange(uri, null);
             return ContentUris.withAppendedId(uri, id);
         }
         Log.e(LOG_TAG, "Failed to insert row for " + uri);
@@ -195,6 +199,8 @@ public class NotesProvider extends ContentProvider {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long id = db.insert(UserEntry.TABLE_NAME, null, contentValues);
         if (id != -1) {
+            getContext().getContentResolver().notifyChange(uri, null);
+            Log.d("SeeLog", "User inserted in db" + id);
             return ContentUris.withAppendedId(uri, id);
         }
         Log.e(LOG_TAG, "Failed to insert row for " + uri);

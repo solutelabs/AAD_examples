@@ -6,5 +6,5 @@ package com.example.android.databaseexample;
 
 public class Constants {
     public final static int ADD_USER_CODE = 1000;
-    public final static int ADD_NOTES_CODE = 1001;
+    public static final java.lang.String USERID = "UsersId";
 }
