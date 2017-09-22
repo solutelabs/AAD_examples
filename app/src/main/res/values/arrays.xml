@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_layout_managers">
+        <item>@string/pref_staggered_grid</item>
+        <item>@string/pref_linear_layout</item>
+    </string-array>
+    <string-array name="pref_layout_managers_value">
+        <item>@string/pref_staggered_grid_value</item>
+        <item>@string/pref_linear_layout_value</item>
+    </string-array>
+</resources>
