@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListPreference
+        android:defaultValue="@string/pref_staggered_grid"
+        android:entries="@array/pref_layout_managers"
+        android:entryValues="@array/pref_layout_managers_value"
+        android:key="@string/pref_key_layout_manager"
+        android:title="@string/pref_title_layout_manager"/>
+
+</PreferenceScreen>

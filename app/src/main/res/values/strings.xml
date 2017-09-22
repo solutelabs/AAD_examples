@@ -23,4 +23,13 @@
     <string name="text_title_error">Please enter title.</string>
     <string name="title_add_notes">Add Notes</string>
     <string name="text_choose_valid_user">Please choose valid User.</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_settings">Settings</string>
+
+    <string name="pref_staggered_grid" translatable="false">Staggered Grid LayoutManager</string>
+    <string name="pref_linear_layout" translatable="false">Linear LayoutManager</string>
+    <string name="pref_staggered_grid_value" translatable="false">staggered_grid_layoutmanager</string>
+    <string name="pref_linear_layout_value" translatable="false">linear_layoutmanager</string>
+    <string name="pref_key_layout_manager">layout_manager</string>
+    <string name="pref_title_layout_manager">Layout style for Notes</string>
 </resources>

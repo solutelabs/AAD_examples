@@ -3,13 +3,19 @@ package com.example.android.databaseexample.home;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,11 +30,13 @@ import com.example.android.databaseexample.R;
 import com.example.android.databaseexample.add_user.AddUserActivity;
 import com.example.android.databaseexample.data.model.User;
 import com.example.android.databaseexample.notes.AddNotesActivity;
+import com.example.android.databaseexample.settings.SettingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements HomeContract.View {
+public class HomeActivity extends AppCompatActivity implements HomeContract.View,
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     private RecyclerView rvShowNotes;
     private Button btnAddNotes, btnAddUser;
@@ -57,8 +65,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private void init() {
         presenter = new HomePresenter(this);
         notesAdapter = new NotesCursorAdapter(null);
-        rvShowNotes.setLayoutManager(
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        setLayoutManager(PreferenceManager.getDefaultSharedPreferences(this),
+                getString(R.string.pref_key_layout_manager));
         rvShowNotes.setAdapter(notesAdapter);
         presenter.getAllUser();
     }
@@ -78,6 +86,30 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                 startActivityForResult(intent, Constants.ADD_USER_CODE);
             }
         });
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_setting) {
+            startActivity(new Intent(HomeActivity.this, SettingActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -157,5 +189,24 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @Override
     public LoaderManager getLoader() {
         return getLoaderManager();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equalsIgnoreCase(getString(R.string.pref_key_layout_manager))) {
+            setLayoutManager(sharedPreferences, key);
+        }
+    }
+
+    private void setLayoutManager(SharedPreferences sharedPreferences, String key) {
+        String value = sharedPreferences.getString(key, "");
+        Log.d("HomeActivity","Value  "+value);
+        if (!value.equalsIgnoreCase("")) {
+            if (value.equalsIgnoreCase(getString(R.string.pref_linear_layout_value))) {
+                rvShowNotes.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            } else {
+                rvShowNotes.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+            }
+        }
     }
 }
