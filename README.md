@@ -45,3 +45,16 @@ If you want to see database query without use of content provider then you can c
 ### 10. Toggle application logic based on preference values
 * [pref_settings.xml](https://github.com/solutelabs/AAD_examples/blob/master/app/src/main/res/xml/pref_settings.xml)
 * [SettingsFragment.java](https://github.com/solutelabs/AAD_examples/blob/master/app/src/main/java/com/example/android/databaseexample/settings/SettingsFragment.java)
+
+## 2.Fundamental application components
+Here i mentioned the subtopic of Fundamental application components with relevant files.
+
+### 1. Describe an application's key functional and nonfunctional requirements
+### 2. Create an Activity that displays a layout resource
+### 3. Fetch local data from disk using a Loader on a background thread
+### 4. Propagate data changes through a Loader to the UI
+### 5. Schedule a time-sensitive task using alarms
+### 6. Schedule a background task using JobScheduler
+### 7. Execute a background task inside of a Service
+### 8. Implement non-standard task stack navigation (deep links)
+### 9. Integrate code from an external support library
