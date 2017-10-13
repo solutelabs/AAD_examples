@@ -29,6 +29,7 @@ import com.example.android.databaseexample.Constants;
 import com.example.android.databaseexample.R;
 import com.example.android.databaseexample.add_user.AddUserActivity;
 import com.example.android.databaseexample.data.model.User;
+import com.example.android.databaseexample.drinking_water.DrinkingWaterActivity;
 import com.example.android.databaseexample.notes.AddNotesActivity;
 import com.example.android.databaseexample.settings.SettingActivity;
 
@@ -98,11 +99,16 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_setting) {
-            startActivity(new Intent(HomeActivity.this, SettingActivity.class));
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_setting:
+                startActivity(new Intent(HomeActivity.this, SettingActivity.class));
+                return true;
+            case R.id.action_drinking_water:
+                startActivity(new Intent(HomeActivity.this, DrinkingWaterActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -200,7 +206,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
     private void setLayoutManager(SharedPreferences sharedPreferences, String key) {
         String value = sharedPreferences.getString(key, "");
-        Log.d("HomeActivity","Value  "+value);
+        Log.d("HomeActivity", "Value  " + value);
         if (!value.equalsIgnoreCase("")) {
             if (value.equalsIgnoreCase(getString(R.string.pref_linear_layout_value))) {
                 rvShowNotes.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

@@ -38,6 +38,34 @@
                 android:value=".home.HomeActivity"/>
         </activity>
 
+        <activity
+            android:name=".drinking_water.DrinkingWaterActivity"
+            android:label="@string/title_drinking_water">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".home.HomeActivity"/>
+        </activity>
+
+        <!-- This is required for immediate syncs-->
+        <!--
+             By default, exported is false, if intent-filter is not specified
+             for activity,service,receiver
+        -->
+        <service
+            android:name=".sync.WaterReminderIntentService"
+            android:exported="false"/>
+
+        <!--
+            By default, exported is true, if intent-filter is specified
+            for activity,service,receiver-->
+        <service
+            android:name=".sync.WaterReminderFirebaseJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
         <provider
             android:name="com.example.android.databaseexample.data.NotesProvider"
             android:authorities="com.example.android.databaseexample"

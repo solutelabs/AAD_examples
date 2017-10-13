@@ -5,4 +5,9 @@
         android:id="@+id/action_setting"
         app:showAsAction="never"
         android:title="@string/menu_settings"/>
+    <item
+        android:id="@+id/action_drinking_water"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_drinking_water"
+        android:title="@string/menu_drinking_water"/>
 </menu>

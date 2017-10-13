@@ -32,4 +32,10 @@
     <string name="pref_linear_layout_value" translatable="false">linear_layoutmanager</string>
     <string name="pref_key_layout_manager">layout_manager</string>
     <string name="pref_title_layout_manager">Layout style for Notes</string>
+    <string name="title_drinking_water">Drinking Water</string>
+    <string name="drinking_reminder_notification_title">Where\'s that water?</string>
+    <string name="drinking_reminder_notification_text">Press to record drinking water</string>
+    <string name="drinking_reminder_notification_body">Take whatever number of sip you want but its necessary for your better health.</string>
+    <string name="menu_drinking_water">Drink</string>
+    <string name="battery_status">Battery Status</string>
 </resources>
